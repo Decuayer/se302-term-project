@@ -1,0 +1,30 @@
+# Windows release: builds the NSIS installer and portable executable when a v* tag is pushed
+# and attaches them to the GitHub Release.
+# Owner: Demir Cücü - D1-5, D1-6
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - run: npm run build:win64
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            dist/*.exe
+      # TODO [D1-6 | Demir Cücü]: Add release notes and verify the installer on a clean Windows VM
+      # (NFR-06) before publishing the final v1.0.0 release.
