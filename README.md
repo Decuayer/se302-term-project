@@ -153,20 +153,29 @@ Samples are in `data/` (250 students, 20 courses, 10 classrooms of 40 seats).
 
 ## Branching workflow
 
-| Branch                                          | Purpose                                                       |
-| ----------------------------------------------- | ------------------------------------------------------------- |
-| `main`                                          | Release-ready code only. Tagged `vX.Y.Z` for GitHub Releases. |
-| `develop`                                       | Integration branch. All feature work merges here via PR.      |
-| `feat/<task-id>-<slug>`                         | New functionality, e.g. `feat/D2-3-attendance-parser`         |
-| `fix/<task-id>-<slug>`                          | Bug fixes linked to a GitHub issue                            |
-| `test/…`, `docs/…`, `chore/…`, `ci/…`, `perf/…` | Non-feature work                                              |
+| Branch                                          | Purpose                                                                                |
+| ----------------------------------------------- | -------------------------------------------------------------------------------------- |
+| `main`                                          | Reviewed and approved code. Only the project manager merges into it; no direct pushes. |
+| `feat/<task-id>-<slug>`                         | One branch per task, e.g. `feat/D2-3-attendance-parser`                                |
+| `fix/<task-id>-<slug>`                          | Bug fixes linked to a GitHub issue                                                     |
+| `test/…`, `docs/…`, `chore/…`, `ci/…`, `perf/…` | Non-feature work                                                                       |
 
-1. Create your branch from the latest `develop` when you start a task.
-2. Commit using [Conventional Commits](https://www.conventionalcommits.org/) and include the task ID:
+1. Update `main` and create your task branch from it:
+   ```bash
+   git checkout main
+   git pull origin main
+   git checkout -b feat/D2-1-students-courses-parser
+   ```
+2. Implement the task, then run `npm run lint && npm run typecheck && npm test` and check the app with `npm run dev`.
+3. Commit using [Conventional Commits](https://www.conventionalcommits.org/) and include the task ID:
    `feat(parser): parse attendance blocks [D2-3]`
-3. Open a pull request into `develop`; CI must pass and one teammate reviews.
-4. Squash-merge. Copy the merged commit URL into the TPS spreadsheet for that task.
-5. For a release, open a PR from `develop` into `main`, then tag `vX.Y.Z` to trigger the Windows release build.
+4. Push **only your task branch**: `git push -u origin feat/D2-1-students-courses-parser`.
+   Never push to `main`, and never use `--force`, `git reset --hard` or `git rebase`.
+5. Open a pull request from your branch into `main` with the task ID in the title, e.g. `[D2-1] Students and courses parser`. CI must pass.
+6. The project manager (Demir Cücü) reviews and merges the pull request. Move the Trello card to **Done** and copy the commit URL into the TPS spreadsheet.
+7. For a release, the project manager tags `vX.Y.Z` on `main` to trigger the Windows release build.
+
+To bring the latest `main` into your branch while working, run `git pull origin main` on your branch. If a merge conflict appears, ask the project manager before resolving it.
 
 Report every bug as a GitHub Issue (steps to reproduce, expected, actual, output, severity), as required by the course.
 
