@@ -1,0 +1,7 @@
+app
+dist
+coverage
+data
+docs
+src/renderer/.next
+package-lock.json
