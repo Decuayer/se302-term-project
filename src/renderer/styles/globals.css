@@ -1,0 +1,23 @@
+/*
+ * Global styles and theme tokens.
+ * Owner: Kutluay Aydın (Frontend - Import & Dashboard) - D5-1
+ * TODO [D5-1 | Kutluay Aydın]: Finalize the color palette and typography so tables, labels and
+ * status messages are readable and distinguishable across views (NFR-04).
+ */
+@import 'tailwindcss';
+
+@theme {
+  --color-brand-50: #eef4ff;
+  --color-brand-500: #3a6ff7;
+  --color-brand-700: #2547b8;
+  --color-status-accepted: #15803d;
+  --color-status-rejected: #b91c1c;
+  --color-status-selected: #a16207;
+  --color-status-missing: #6b7280;
+}
+
+@layer base {
+  body {
+    @apply bg-slate-50 text-slate-900 antialiased;
+  }
+}
