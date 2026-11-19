@@ -1,0 +1,32 @@
+# Packaging configuration (D1-5 | Demir Cücü).
+# Produces a one-click NSIS installer and a portable executable for Windows (NFR-01).
+appId: edu.ieu.se302.team11.examscheduler
+productName: Exam Scheduler
+copyright: Copyright © 2026 SE302 Section 1 - Team 11
+directories:
+  output: dist
+  buildResources: resources
+files:
+  - from: .
+    filter:
+      - package.json
+      - app
+win:
+  target:
+    - target: nsis
+      arch: [x64]
+    - target: portable
+      arch: [x64]
+  icon: resources/icon.ico
+nsis:
+  oneClick: true
+  perMachine: false
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: Exam Scheduler
+portable:
+  artifactName: ${productName}-${version}-portable.${ext}
+# TODO [D1-5 | Demir Cücü]: Replace the placeholder icons in resources/ with the project icon and
+# verify `npm run build:win64` produces both the installer and the portable executable.
+# TODO [D1-6 | Demir Cücü]: Configure GitHub Releases publishing once the release workflow is validated.
+publish: null
