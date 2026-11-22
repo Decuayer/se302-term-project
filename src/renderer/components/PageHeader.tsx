@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file PageHeader.tsx
  * @module renderer/components
  *
@@ -14,7 +14,7 @@ interface PageHeaderProps {
 
 export function PageHeader({ title, subtitle }: PageHeaderProps) {
   return (
-    <header className="mb-6">
+    <header className="exam-page-header mb-6">
       <h1 className="text-2xl font-semibold">{title}</h1>
       {subtitle ? <p className="mt-1 text-sm text-slate-600">{subtitle}</p> : null}
     </header>

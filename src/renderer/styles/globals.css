@@ -1,8 +1,6 @@
-/*
+﻿/*
  * Global styles and theme tokens.
  * Owner: Kutluay Aydın (Frontend - Import & Dashboard) - D5-1
- * TODO [D5-1 | Kutluay Aydın]: Finalize the color palette and typography so tables, labels and
- * status messages are readable and distinguishable across views (NFR-04).
  */
 @import 'tailwindcss';
 
@@ -10,14 +8,326 @@
   --color-brand-50: #eef4ff;
   --color-brand-500: #3a6ff7;
   --color-brand-700: #2547b8;
-  --color-status-accepted: #15803d;
+  --color-status-accepted: #166534;
   --color-status-rejected: #b91c1c;
-  --color-status-selected: #a16207;
-  --color-status-missing: #6b7280;
+  --color-status-selected: #854d0e;
+  --color-status-missing: #475569;
 }
 
 @layer base {
   body {
-    @apply bg-slate-50 text-slate-900 antialiased;
+    @apply text-slate-900 antialiased;
+    background: #f7f5f1;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+  }
+}
+
+.exam-shell {
+  --exam-navy: #003460;
+  --exam-orange: #ff6900;
+  --exam-muted: #516071;
+  --exam-radius: 20px;
+  --exam-shadow: 0 12px 36px rgb(23 47 73 / 8%), 0 1px 2px rgb(23 47 73 / 4%);
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: 222px minmax(0, 1fr);
+  gap: 24px;
+  height: 100vh;
+  padding: 16px 20px;
+}
+
+.exam-shell::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: url('/brand/arkaplan.png') 64% 46% / cover no-repeat;
+  opacity: 0.22;
+  pointer-events: none;
+  content: '';
+}
+
+.exam-shell :focus-visible {
+  outline: 2px solid #004a8c;
+  outline-offset: 3px;
+}
+
+.exam-workspace {
+  min-width: 0;
+  overflow: auto;
+  padding: 16px 8px 24px 4px;
+}
+
+.exam-sidebar {
+  min-height: 0;
+  overflow: auto;
+  padding: 12px;
+  border: 1px solid rgb(255 255 255 / 24%);
+  border-radius: var(--exam-radius);
+  background: rgb(0 52 96 / 94%);
+  color: white;
+  box-shadow:
+    var(--exam-shadow),
+    inset 0 1px 0 rgb(255 255 255 / 12%);
+  backdrop-filter: blur(16px);
+}
+
+.exam-sidebar :focus-visible {
+  outline-color: white;
+}
+
+.exam-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  padding: 12px 4px 24px;
+  border-bottom: 1px solid rgb(255 255 255 / 18%);
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.exam-brand img {
+  flex: 0 0 68px;
+  height: 48px;
+  object-fit: contain;
+}
+
+.exam-brand strong {
+  color: #ff974d;
+  font-weight: inherit;
+}
+
+.exam-sidebar ul {
+  display: grid;
+  gap: 5px;
+}
+
+.exam-nav-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 8px 13px;
+  border-radius: 9px;
+  color: #e5edf6;
+  font-size: 0.875rem;
+}
+
+a.exam-nav-item:hover,
+.exam-nav-item[aria-current='page'] {
+  background: rgb(255 255 255 / 13%);
+  color: white;
+}
+
+.exam-nav-item[aria-current='page']::before {
+  position: absolute;
+  inset: 11px auto 11px 0;
+  width: 3px;
+  border-radius: 0 3px 3px 0;
+  background: var(--exam-orange);
+  content: '';
+}
+
+.exam-nav-item[aria-disabled='true'] {
+  color: #b3c6d9;
+  cursor: not-allowed;
+}
+
+.exam-page-header h1 {
+  color: var(--exam-navy);
+  font-size: clamp(1.625rem, 3vw, 2.125rem);
+  line-height: 1.2;
+}
+
+.exam-dashboard {
+  display: grid;
+  gap: 16px;
+  max-width: 1160px;
+}
+
+.exam-dashboard .exam-page-header {
+  margin-bottom: 4px;
+}
+
+.exam-glass {
+  border: 1px solid rgb(255 255 255 / 85%);
+  border-radius: var(--exam-radius);
+  background: rgb(255 255 255 / 72%);
+  box-shadow: var(--exam-shadow);
+  backdrop-filter: blur(14px);
+}
+
+.exam-panel {
+  display: grid;
+  gap: 10px;
+  padding: clamp(16px, 2vw, 26px);
+  overflow-wrap: anywhere;
+}
+
+.exam-panel-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.exam-panel h2 {
+  color: var(--exam-navy);
+  font-size: 1.125rem;
+  font-weight: 650;
+}
+
+.exam-panel h3 {
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.exam-primary-action,
+.exam-view-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: 42px;
+  padding: 8px 14px;
+  border: 1px solid #d5dbe4;
+  border-radius: 9px;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.exam-primary-action {
+  border-color: var(--exam-orange);
+  background: var(--exam-orange);
+  color: #241306;
+}
+
+.exam-primary-action:hover {
+  background: #ff8735;
+}
+
+.exam-import-grid,
+.exam-stat-grid,
+.exam-views {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 145px), 1fr));
+  gap: 10px;
+}
+
+.exam-import-card,
+.exam-stat-grid > div,
+.exam-view-link {
+  background: white;
+}
+
+.exam-import-card,
+.exam-stat-grid > div {
+  display: grid;
+  align-content: start;
+  gap: 5px;
+  padding: 12px;
+  border: 1px solid #d5dbe4;
+  border-radius: 12px;
+}
+
+.exam-muted,
+.exam-stat-grid dt {
+  color: var(--exam-muted);
+  font-size: 0.875rem;
+}
+
+.exam-stat-grid dd {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.exam-status {
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+  color: var(--exam-muted);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.exam-status::before {
+  flex: 0 0 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+  content: '';
+}
+
+.exam-status[data-status='accepted'] {
+  color: var(--color-status-accepted);
+}
+.exam-status[data-status='selected'] {
+  color: var(--color-status-selected);
+}
+.exam-status[data-status='rejected'] {
+  color: var(--color-status-rejected);
+}
+.exam-status[data-status='missing'] {
+  color: var(--color-status-missing);
+}
+
+.exam-result-detail ol {
+  margin-top: 4px;
+  padding-inline-start: 22px;
+  list-style: decimal;
+  font-size: 0.875rem;
+}
+
+.exam-view-link {
+  color: var(--exam-navy);
+}
+
+a.exam-view-link:hover {
+  border-color: #8ba5be;
+  background: #eef4fa;
+}
+
+.exam-view-link[aria-disabled='true'] {
+  background: #f1f4f7;
+  color: var(--exam-muted);
+  cursor: not-allowed;
+}
+
+@media (max-width: 760px) {
+  .exam-shell {
+    grid-template-columns: 165px minmax(0, 1fr);
+    gap: 12px;
+    padding: 12px;
+  }
+
+  .exam-brand {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 500px) {
+  .exam-shell {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr);
+  }
+
+  .exam-sidebar {
+    max-height: 40vh;
+  }
+
+  .exam-brand {
+    margin-bottom: 8px;
+    padding: 0 4px 8px;
+  }
+
+  .exam-sidebar ul {
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  }
+
+  .exam-workspace {
+    padding-top: 4px;
   }
 }
