@@ -1,31 +1,49 @@
-/**
- * @file Sidebar.tsx
- * @module renderer/components/Layout
- *
- * Responsibility: Left navigation between the dashboard, import screen, result views
- * and help.
- *
- * Owner: Kutluay Aydın (Frontend - Import & Dashboard) - D5-1
- * References: architecture.png (Dashboard & Help Menu, Views Container), SRS Sec. 6
+﻿/**
+ * Application navigation for the dashboard, import, results and help (D5-1).
  */
+import Image from 'next/image'
 import Link from 'next/link'
-import { NAVIGATION_ITEMS } from './navigation'
+import { useRouter } from 'next/router'
+import { useAppStore } from '../../store/useAppStore'
+import { isNavigationAvailable, NAVIGATION_ITEMS } from './navigation'
 
 export function Sidebar() {
-  // TODO [D5-1 | Kutluay Aydın]: Highlight the active route (useRouter().pathname), disable result
-  // views until a schedule exists, and apply the final theme. Acceptance: every page is reachable.
+  const { pathname } = useRouter()
+  const schedule = useAppStore((state) => state.schedule)
+
   return (
-    <nav className="flex w-56 shrink-0 flex-col gap-1 border-r border-slate-200 bg-white p-4">
-      <p className="mb-4 text-lg font-semibold">Exam Scheduler</p>
-      {NAVIGATION_ITEMS.map((item) => (
-        <Link
-          key={item.href}
-          href={item.href}
-          className="rounded px-3 py-2 text-sm hover:bg-slate-100"
-        >
-          {item.label}
-        </Link>
-      ))}
-    </nav>
+    <aside className="exam-sidebar">
+      <Link href="/home" className="exam-brand" aria-label="Exam Scheduler home">
+        <Image src="/brand/ieu-logo-tr-2.png" alt="" width={68} height={48} />
+        <span>
+          Exam <strong>Scheduler</strong>
+        </span>
+      </Link>
+      <nav aria-label="Main navigation">
+        <ul>
+          {NAVIGATION_ITEMS.map((item) => {
+            const current = item.href === pathname ? 'page' : undefined
+            return (
+              <li key={item.href}>
+                {isNavigationAvailable(item, schedule) ? (
+                  <Link href={item.href} className="exam-nav-item" aria-current={current}>
+                    {item.label}
+                  </Link>
+                ) : (
+                  <span
+                    className="exam-nav-item"
+                    role="link"
+                    aria-disabled="true"
+                    aria-current={current}
+                  >
+                    {item.label}
+                  </span>
+                )}
+              </li>
+            )
+          })}
+        </ul>
+      </nav>
+    </aside>
   )
 }

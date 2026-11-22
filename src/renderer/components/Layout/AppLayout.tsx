@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file AppLayout.tsx
  * @module renderer/components/Layout
  *
@@ -21,9 +21,9 @@ export function AppLayout({ children }: AppLayoutProps) {
   // TODO [D1-2 | Demir Cücü]: Subscribe to window.api.onMenuCommand here and route 'open-help' and
   // 'open-import' to the matching pages.
   return (
-    <div className="flex h-screen">
+    <div className="exam-shell">
       <Sidebar />
-      <main className="flex flex-1 flex-col overflow-y-auto p-6">
+      <main className="exam-workspace">
         <SchedulerProgress />
         {children}
       </main>
